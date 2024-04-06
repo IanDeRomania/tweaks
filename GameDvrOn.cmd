@@ -1,10 +1,4 @@
 @echo off
-goto check_Permissions
-:check_Permissions
-    echo Administrative permissions required. Detecting permissions...
-    net session >nul 2>&1
-    if %errorLevel% == 0 (
-        echo Success: Administrative permissions confirmed.
 move "C:\Windows\System32\GameBarPresenceWriter.OLD" "C:\Windows\System32\GameBarPresenceWriter.exe"
 icacls "%WinDir%\System32\GameBarPresenceWriter.exe" /setowner "NT Service\TrustedInstaller" /c
 icacls "%WinDir%\System32\GameBarPresenceWriter.exe" /grant:r Ville:RX /c
@@ -26,7 +20,4 @@ reg add "HKCU\Software\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d 
 reg add "HKCU\System\GameConfigStore" /v "GameDVR_Enabled" /t REG_DWORD /d "1" /f
 reg add "HKLM\Software\Policies\Microsoft\Windows\GameDVR" /v "AllowgameDVR" /t REG_DWORD /d "1" /f
 reg add "HKCU\Software\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "1" /f
-    ) else (
-        echo Failure: Current permissions inadequate.
-    )
-    pause >nul
+exit
